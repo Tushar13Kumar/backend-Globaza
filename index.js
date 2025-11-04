@@ -1,4 +1,5 @@
 const express = require("express")
+const cors = require("cors");
 const app = express()
 
 const { initializeDatabase } = require("./db/db.connect");
@@ -11,7 +12,7 @@ const User = require("./models/User");
 const Order = require("./models/Order");
 const Cart = require("./models/Cart");
 const Wishlist = require("./models/Wishlist");
-
+app.use(cors());
 app.use(express.json())
 
 // Connect to Database
