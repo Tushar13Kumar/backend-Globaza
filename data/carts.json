@@ -1,0 +1,11 @@
+[
+  {
+    "id": "cart1",
+    "userId": "u1",
+    "items": [
+      { "productId": "p2", "quantity": 1 },
+      { "productId": "p5", "quantity": 2 }
+    ],
+    "totalPrice": 7997
+  }
+]

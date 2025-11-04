@@ -1,0 +1,14 @@
+[
+  {
+    "id": "o1",
+    "userId": "u1",
+    "items": [
+      { "productId": "p1", "quantity": 1 },
+      { "productId": "p10", "quantity": 1 }
+    ],
+    "totalAmount": 3398,
+    "address": "123 MG Road, Delhi, Delhi, 110001",
+    "status": "Placed",
+    "createdAt": "2025-11-03T12:00:00Z"
+  }
+]

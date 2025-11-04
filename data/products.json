@@ -1,0 +1,122 @@
+[
+  {
+    "id": "p1",
+    "name": "Classic Leather Backpack",
+    "image": "https://images.unsplash.com/photo-1600181955681-5d1d0f3f96ce?w=600",
+    "category": "Bags",
+    "price": 2599,
+    "originalPrice": 4999,
+    "discount": 48,
+    "rating": 4.6,
+    "stock": 30,
+    "description": "This handmade leather backpack blends timeless design with practical functionality. It is crafted from 100% genuine leather with reinforced stitching to ensure durability. There are multiple compartments including a padded laptop sleeve and front utility pocket for everyday use. The adjustable straps make it comfortable to carry whether commuting or travelling. This backpack develops a rich patina over time, making it not just useful but uniquely yours."
+  },
+  {
+    "id": "p2",
+    "name": "Wireless Bluetooth Headphones",
+    "image": "https://images.unsplash.com/photo-1580894908361-967195033215?w=600",
+    "category": "Electronics",
+    "price": 3499,
+    "originalPrice": 6999,
+    "discount": 50,
+    "rating": 4.8,
+    "stock": 40,
+    "description": "Experience immersive audio with these high-performance wireless Bluetooth headphones featuring active noise cancellation. They deliver crisp highs and deep bass for music, gaming or calls. Lightweight and comfy, they fit securely for long listening sessions without fatigue. Equipped with fast charging via USB-C and up to 20 hours of battery life on a single charge. Ideal for modern users seeking both style and sound quality."
+  },
+  {
+    "id": "p3",
+    "name": "Smart Fitness Watch",
+    "image": "https://images.unsplash.com/photo-1606813909027-13322b3c9a0b?w=600",
+    "category": "Watches & Accessories",
+    "price": 2999,
+    "originalPrice": 5999,
+    "discount": 50,
+    "rating": 4.4,
+    "stock": 25,
+    "description": "Track your health and fitness goals with this smart fitness watch featuring real-time heart rate and sleep monitoring. Built with a waterproof body and durable strap for everyday wear. It syncs seamlessly with Android and iOS devices through an intuitive mobile app. The watch also shows notifications, steps, calories burned and more on its vibrant display. Designed to be both functional and stylish, it suits workouts and casual outfits alike."
+  },
+  {
+    "id": "p4",
+    "name": "Ceramic Coffee Mug Set",
+    "image": "https://images.unsplash.com/photo-1510626176961-4b37d6b90c4b?w=600",
+    "category": "Home & Kitchen",
+    "price": 799,
+    "originalPrice": 1599,
+    "discount": 50,
+    "rating": 4.2,
+    "stock": 60,
+    "description": "An elegant ceramic mug set designed for coffee and tea enthusiasts with matte finish and ergonomic handles. Each mug is dishwasher-safe and microwave-safe for convenient daily use. The set includes multiple mugs with matching saucers to elevate your kitchen or office space. Sleek and modern, this set makes a thoughtful gift or a stylish addition to your home. Made to last and bring joy with every sip."
+  },
+  {
+    "id": "p5",
+    "name": "Minimalist Wrist Watch",
+    "image": "https://images.unsplash.com/photo-1518544801958-efcbf8a7ec10?w=600",
+    "category": "Watches & Accessories",
+    "price": 1999,
+    "originalPrice": 3999,
+    "discount": 50,
+    "rating": 4.7,
+    "stock": 20,
+    "description": "This refined wrist watch embodies minimalist design with a slim profile and stainless steel case. It features Japanese quartz movement for reliable timekeeping and is water-resistant for everyday wear. Its understated look complements both formal and casual attire. Delivered in premium packaging, it makes the perfect gift. A timepiece that balances aesthetics and practicality beautifully."
+  },
+  {
+    "id": "p6",
+    "name": "Men’s Running Shoes",
+    "image": "https://images.unsplash.com/photo-1606813908983-b9fc97ff7b3e?w=600",
+    "category": "Footwear",
+    "price": 2499,
+    "originalPrice": 4999,
+    "discount": 50,
+    "rating": 4.5,
+    "stock": 50,
+    "description": "These running shoes are engineered for comfort, flexibility, and durability with breathable mesh uppers and cushioned soles. Designed for jogging, gym workouts or casual outings, they provide strong support and traction on multiple surfaces. The lightweight frame keeps you agile and ready for performance. Available in a range of sizes and colours tailored for active lifestyles. A reliable choice for both beginners and regular runners alike."
+  },
+  {
+    "id": "p7",
+    "name": "Wooden Study Lamp",
+    "image": "https://images.unsplash.com/photo-1578898887932-c28a0b3b467b?w=600",
+    "category": "Lighting",
+    "price": 1499,
+    "originalPrice": 2999,
+    "discount": 50,
+    "rating": 4.3,
+    "stock": 35,
+    "description": "A stylish wooden desk lamp to enhance your workspace with warm LED lighting and an adjustable arm for focused reading. Crafted from sustainable wood for an eco-friendly touch and modern aesthetic. Perfect for students, professionals or anyone setting up a home office. Combines function and design in one sleek accessory. Easy to place on a desk or bedside table, it elevates both style and productivity."
+  },
+  {
+    "id": "p8",
+    "name": "Cotton Bedsheet Set",
+    "image": "https://images.unsplash.com/photo-1615874959474-d609969a7f3a?w=600",
+    "category": "Home Decor",
+    "price": 1599,
+    "originalPrice": 2999,
+    "discount": 47,
+    "rating": 4.6,
+    "stock": 45,
+    "description": "Soft and breathable cotton bedsheet set designed for comfort and durability, including one bedsheet and two matching pillow covers. Machine-washable and color-fast even after multiple washes, perfect for all seasons. The modern design adds elegance to your bedroom and blends easily with existing decor. Ideal for restful sleep and stylish aesthetics combined. An excellent upgrade for your home comfort and style."
+  },
+  {
+    "id": "p9",
+    "name": "Wireless Keyboard & Mouse Combo",
+    "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600",
+    "category": "Electronics",
+    "price": 1899,
+    "originalPrice": 3499,
+    "discount": 46,
+    "rating": 4.4,
+    "stock": 40,
+    "description": "An ergonomic wireless keyboard and mouse combo designed for productivity and comfort with silent keys and smooth mouse movement. Plug and play connectivity ensures hassle-free setup with long battery life. Ideal for office, home or remote work setups. Sleek design complements modern workspaces while delivering reliable performance. A smart bundle to elevate your computing experience."
+  },
+  {
+    "id": "p10",
+    "name": "Stainless Steel Water Bottle",
+    "image": "https://images.unsplash.com/photo-1595433562696-19c85d1bba3a?w=600",
+    "category": "Outdoor Essentials",
+    "price": 799,
+    "originalPrice": 1499,
+    "discount": 47,
+    "rating": 4.5,
+    "stock": 70,
+    "description": "Stay hydrated on the go with this eco-friendly stainless steel water bottle that maintains hot and cold temperatures for hours. Leak-proof design and easy-carry handle ensure convenience for gym, travel, or daily use. The sleek exterior and durable construction make it a sustainable choice for modern living. Lightweight yet rugged, it’s built to accompany you on adventures. Reliable, stylish and environmentally conscious."
+  }
+]

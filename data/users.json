@@ -1,0 +1,30 @@
+[
+  {
+    "id": "u1",
+    "name": "Tushar Kumar",
+    "email": "tushar@example.com",
+    "password": "hashedpassword123",
+    "address": [
+      {
+        "street": "123 MG Road",
+        "city": "Delhi",
+        "state": "Delhi",
+        "zip": "110001"
+      }
+    ]
+  },
+  {
+    "id": "u2",
+    "name": "Aarav Singh",
+    "email": "aarav@example.com",
+    "password": "hashedpassword456",
+    "address": [
+      {
+        "street": "56 Park Avenue",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "zip": "400001"
+      }
+    ]
+  }
+]
