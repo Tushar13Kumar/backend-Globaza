@@ -3,13 +3,13 @@ const cors = require("cors");
 const app = express()
 
 const { initializeDatabase } = require("./db/db.connect");
-//const fs = require("fs");
+const fs = require("fs");
 
 // Models
 const Product = require("./models/Product");
 const Category = require("./models/Category");
 const User = require("./models/User");
-const Order = require("./models/Order");
+//const Order = require("./models/Order");
 const Cart = require("./models/Cart");
 const Wishlist = require("./models/Wishlist");
 app.use(cors());
@@ -20,35 +20,35 @@ initializeDatabase();
 
 //products 
 
-async function readProductById(productId) {
-    try{
-        const product = await Product.findById( productId )
-        return(product)
+// async function readProductById(productId) {
+//     try{
+//         const product = await Product.findById( productId )
+//         return(product)
 
-    } catch(error){
-        throw error
+//     } catch(error){
+//         throw error
 
-    }
+//     }
     
-}
+// }
 
-app.get("/product/:productId" , async(req , res) => {
-    try{
-        const product = await readProductById(req.params.productId)
-        if(product){
-            res.json(product)
-        }else{
-            res.status(404).json({error: "product is not found"})
-        }
+// app.get("/product/:productId" , async(req , res) => {
+//     try{
+//         const product = await readProductById(req.params.productId)
+//         if(product){
+//             res.json(product)
+//         }else{
+//             res.status(404).json({error: "product is not found"})
+//         }
 
-    } catch(error){
-        res.status(500).json({error: "failed to fetch product"})
-    }
-})
+//     } catch(error){
+//         res.status(500).json({error: "failed to fetch product"})
+//     }
+// })
 
 async function readAllProducts(){
     try{
-        const allProducts = await Product.find()
+        const allProducts = await Product.find().populate("category")
         return(allProducts)
 
     } catch(error){
@@ -57,21 +57,22 @@ async function readAllProducts(){
     }
 }
 
-app.get("/products" , async (req , res) => {
-    try{
-        const products = await readAllProducts()
-        if(products.length != 0 ){
-            res.json(products)
-        } else {
-            res.status(404).json({error: "not found products"})
-        }
-
-    } catch(error){
-        res.status(500).json({error: "failed to fetch products"})
+app.get("/products", async (req, res) => {
+  try {
+    const products = await readAllProducts();
+    if (products.length != 0) {
+      res.json(products);
+    } else {
+      res.status(404).json({ error: "not found products" });
     }
-})
+  } catch (error) {
+    console.error("❌ Error in /products:", error);
+    res.status(500).json({ error: "failed to fetch products" });
+  }
+});
 
-//categories api 
+
+// //categories api 
 async function readAllProductsCategories(){
     try{
         const allProductsCategories = await Category.find()
@@ -123,10 +124,10 @@ app.get("/categories/:categoryId" , async(req , res) => {
     }
 })
 
-//wishlist api
+// //wishlist api
 async function readAllWishlist(){
     try{
-        const allWishlist = await Wishlist.find()
+        const allWishlist = await Wishlist.find().populate("products")
         return(allWishlist)
     } catch(error){
         throw error
@@ -174,7 +175,7 @@ app.get("/wishlist/:wishlistId" , async(req , res) => {
 //cart api
 async function readAllCarts(){
     try{
-        const allCarts = await Cart.find()
+        const allCarts = await Cart.find().populate("items")
         return(allCarts)
     } catch(error){
         throw error
@@ -221,7 +222,7 @@ app.get("/carts/:cartId" , async(req , res) => {
 
 
 
-//address api
+// //address api
 async function readAllAddresses(){
     try{
         const allAddresses = await User.find().select("addresses name")
@@ -231,42 +232,42 @@ async function readAllAddresses(){
     }
 }
 
-// app.get("/address" , async (req , res) => {
-//     try{
-//         const addresses = await readAllAddresses()
-//         if(addresses.length != 0 ){
-//             res.json(addresses)
-//         } else {
-//             res.status(404).json({error: "not found addresses"})
-//         }
+app.get("/address" , async (req , res) => {
+    try{
+        const addresses = await readAllAddresses()
+        if(addresses.length != 0 ){
+            res.json(addresses)
+        } else {
+            res.status(404).json({error: "not found addresses"})
+        }
 
-//     } catch(error){
-//         res.status(500).json({error: "failed to fetch addresses"})
-//     }
-// })
+    } catch(error){
+        res.status(500).json({error: "failed to fetch addresses"})
+    }
+})
 
-// async function readAddressById(addressId) {
-//     try{
-//         const user = await User.findOne({ "addresses._id": addressId }, { "addresses.$": 1 })
-//         return(user ? user.addresses[0] : null)
-//     } catch(error){
-//         throw error
-//     }
-// }
+async function readAddressById(addressId) {
+    try{
+        const user = await User.findOne({ "addresses._id": addressId }, { "addresses.$": 1 })
+        return(user ? user.addresses[0] : null)
+    } catch(error){
+        throw error
+    }
+}
 
-// app.get("/address/:addressId" , async(req , res) => {
-//     try{
-//         const address = await readAddressById(req.params.addressId)
-//         if(address){
-//             res.json(address)
-//         }else{
-//             res.status(404).json({error: "address is not found"})
-//         }
+app.get("/address/:addressId" , async(req , res) => {
+    try{
+        const address = await readAddressById(req.params.addressId)
+        if(address){
+            res.json(address)
+        }else{
+            res.status(404).json({error: "address is not found"})
+        }
 
-//     } catch(error){
-//         res.status(500).json({error: "failed to fetch address"})
-//     }
-// })
+    } catch(error){
+        res.status(500).json({error: "failed to fetch address"})
+    }
+})
 
 // async function readAddressByName(userName) {
 //     try{
@@ -292,52 +293,52 @@ async function readAllAddresses(){
 // })
 
 
-//orders api
-async function readAllOrders(){
-    try{
-        const allOrders = await Order.find()
-        return(allOrders)
-    } catch(error){
-        throw error
-    }
-}
+// //orders api
+// async function readAllOrders(){
+//     try{
+//         const allOrders = await Order.find().populate("user").populate("items")
+//         return(allOrders)
+//     } catch(error){
+//         throw error
+//     }
+// }
 
-app.get("/orders" , async (req , res) => {
-    try{
-        const orders = await readAllOrders()
-        if(orders.length != 0 ){
-            res.json(orders)
-        } else {
-            res.status(404).json({error: "not found orders"})
-        }
+// app.get("/orders" , async (req , res) => {
+//     try{
+//         const orders = await readAllOrders()
+//         if(orders.length != 0 ){
+//             res.json(orders)
+//         } else {
+//             res.status(404).json({error: "not found orders"})
+//         }
 
-    } catch(error){
-        res.status(500).json({error: "failed to fetch orders"})
-    }
-})
+//     } catch(error){
+//         res.status(500).json({error: "failed to fetch orders"})
+//     }
+// })
 
-async function readOrderById(orderId) {
-    try{
-        const order = await Order.findById(orderId)
-        return(order)
-    } catch(error){
-        throw error
-    }
-}
+// async function readOrderById(orderId) {
+//     try{
+//         const order = await Order.findById(orderId)
+//         return(order)
+//     } catch(error){
+//         throw error
+//     }
+// }
 
-app.get("/orders/:orderId" , async(req , res) => {
-    try{
-        const order = await readOrderById(req.params.orderId)
-        if(order){
-            res.json(order)
-        }else{
-            res.status(404).json({error: "order is not found"})
-        }
+// app.get("/orders/:orderId" , async(req , res) => {
+//     try{
+//         const order = await readOrderById(req.params.orderId)
+//         if(order){
+//             res.json(order)
+//         }else{
+//             res.status(404).json({error: "order is not found"})
+//         }
 
-    } catch(error){
-        res.status(500).json({error: "failed to fetch order"})
-    }
-})
+//     } catch(error){
+//         res.status(500).json({error: "failed to fetch order"})
+//     }
+// })
 
 
 const PORT = 3000
@@ -359,11 +360,11 @@ app.listen(PORT , () => {
 // const jsonDataOrders = fs.readFileSync("./data/orders.json", "utf-8");
 // const ordersData = JSON.parse(jsonDataOrders);
 
-// const jsonDataCarts = fs.readFileSync("./data/carts.json", "utf-8");
-// const cartsData = JSON.parse(jsonDataCarts);
+const jsonDataCarts = fs.readFileSync("./data/carts.json", "utf-8");
+const cartsData = JSON.parse(jsonDataCarts);
 
-// const jsonDataWishlist = fs.readFileSync("./data/wishlist.json", "utf-8");
-// const wishlistData = JSON.parse(jsonDataWishlist);
+ const jsonDataWishlist = fs.readFileSync("./data/wishlist.json", "utf-8");
+ const wishlistData = JSON.parse(jsonDataWishlist);
 
 // 2️⃣ Seeding Functions
 // function seedDataProducts() {
@@ -388,6 +389,16 @@ app.listen(PORT , () => {
 //     console.error("❌ Error seeding products:", error);
 //   }
 // }
+
+// async function deleteProduct(productId){
+//     try{
+//       const deleteProduct = await Product.findByIdAndDelete(productId)
+//     } catch(error){
+//         console.log("error in deleting product" , error)
+//     }
+// }
+
+// deleteProduct("690887c9491fad56b915753e")
 
 // function seedDataCategories() {
 //   try {
@@ -425,7 +436,7 @@ app.listen(PORT , () => {
 //   try {
 //     for (const orderData of ordersData) {
 //       const newOrder = new Order({
-//         userId: orderData.userId,
+//          user: orderData.user,
 //         items: orderData.items,
 //         totalAmount: orderData.totalAmount,
 //         address: orderData.address,
@@ -440,41 +451,41 @@ app.listen(PORT , () => {
 //   }
 // }
 
-// function seedDataCarts() {
-//   try {
-//     for (const cartData of cartsData) {
-//       const newCart = new Cart({
-//         userId: cartData.userId,
-//         items: cartData.items,
-//         totalPrice: cartData.totalPrice,
-//       });
-//       newCart.save();
-//     }
-//     console.log("✅ Carts seeded successfully!");
-//   } catch (error) {
-//     console.error("❌ Error seeding carts:", error);
-//   }
-// }
+function seedDataCarts() {
+  try {
+    for (const cartData of cartsData) {
+      const newCart = new Cart({
+        //user: cartData.user, // ✅ correct field name
+        items: cartData.items, // ✅ each item contains {product, quantity}
+        //totalPrice: cartData.totalPrice,
+      });
+      newCart.save();
+    }
+    console.log("✅ Carts seeded successfully!");
+  } catch (error) {
+    console.error("❌ Error seeding carts:", error);
+  }
+}
 
-// function seedDataWishlist() {
-//   try {
-//     for (const wishData of wishlistData) {
-//       const newWishlist = new Wishlist({
-//         userId: wishData.userId,
-//         products: wishData.products,
-//       });
-//       newWishlist.save();
-//     }
-//     console.log("✅ Wishlist seeded successfully!");
-//   } catch (error) {
-//     console.error("❌ Error seeding wishlist:", error);
-//   }
-// }
+function seedDataWishlist() {
+  try {
+    for (const wishData of wishlistData) {
+      const newWishlist = new Wishlist({
+        user: wishData.user,
+        products: wishData.products,
+      });
+      newWishlist.save();
+    }
+    console.log("✅ Wishlist seeded successfully!");
+  } catch (error) {
+    console.error("❌ Error seeding wishlist:", error);
+  }
+}
 
 // // 3️⃣ Run All Seeds
-// seedDataProducts();
+//seedDataProducts();
 // seedDataCategories();
 // seedDataUsers();
-// seedDataOrders();
-// seedDataCarts();
-// seedDataWishlist();
+//seedDataOrders();
+seedDataCarts();
+seedDataWishlist();

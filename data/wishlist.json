@@ -1,12 +1,8 @@
 [
   {
-    "id": "w1",
-    "userId": "u1",
-    "products": ["p1", "p3", "p5"]
+    "products": ["690b22c20c849aff850cd3e5", "690b22c20c849aff850cd3e9"]
   },
   {
-    "id": "w2",
-    "userId": "u2",
-    "products": ["p2", "p4"]
+    "products": ["690b22c20c849aff850cd3e6", "690b22c20c849aff850cd3ea"]
   }
 ]

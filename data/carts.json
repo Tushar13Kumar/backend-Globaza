@@ -1,11 +1,14 @@
 [
   {
-    "id": "cart1",
-    "userId": "u1",
     "items": [
-      { "productId": "p2", "quantity": 1 },
-      { "productId": "p5", "quantity": 2 }
-    ],
-    "totalPrice": 7997
+      { "product": "690b22c20c849aff850cd3e5"},
+      { "product": "690b22c20c849aff850cd3e9" }
+    ]
+  },
+  {
+    "items": [
+      { "product": "690b22c20c849aff850cd3ea" },
+      { "product": "690b22c20c849aff850cd3e6" }
+    ]
   }
 ]

@@ -1,14 +1,22 @@
 [
   {
-    "id": "o1",
-    "userId": "u1",
+    "user": "69088e805fad76b70e63ab3c",
     "items": [
-      { "productId": "p1", "quantity": 1 },
-      { "productId": "p10", "quantity": 1 }
+      { "product": "690b22c20c849aff850cd3e9", "quantity": 1 },
+      { "product": "690b22c20c849aff850cd3e7", "quantity": 1 }
     ],
-    "totalAmount": 3398,
-    "address": "123 MG Road, Delhi, Delhi, 110001",
-    "status": "Placed",
-    "createdAt": "2025-11-03T12:00:00Z"
+    "totalAmount": 5298,
+    "address": "A-45, Green Park, Delhi",
+    "status": "Delivered"
+  },
+  {
+    "user": "68dfab2c8e4f4b2ef282a5ee",
+    "items": [
+      { "product": "690b22c20c849aff850cd3ea", "quantity": 1 },
+      { "product": "690b22c20c849aff850cd3e6", "quantity": 1 }
+    ],
+    "totalAmount": 6998,
+    "address": "12 MG Road, Bengaluru",
+    "status": "Shipped"
   }
 ]

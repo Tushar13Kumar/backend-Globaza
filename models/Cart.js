@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 
 const cartSchema = new mongoose.Schema(
   {
-    userId: String, // simple string, not ObjectId
+    // user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },// simple string, not ObjectId
     items: [
       {
-        productId: String, // simple string, same as product._id in JSON file
+        product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" }, // simple string, same as product._id in JSON file
         quantity: Number,
       },
     ],
-    totalPrice: Number,
+    //totalPrice: Number,
   },
   { timestamps: true }
 );
