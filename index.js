@@ -349,10 +349,7 @@ app.get("/address/:addressId" , async(req , res) => {
 // })
 
 
-const PORT = 3000
-app.listen(PORT , () => {
-    console.log(`server is running on ${PORT}`)
-})
+module.exports = app;
 
 
 // 1️⃣ Read JSON Files
@@ -495,5 +492,5 @@ function seedDataWishlist() {
 // seedDataCategories();
 // seedDataUsers();
 //seedDataOrders();
-seedDataCarts();
-seedDataWishlist();
+//seedDataCarts();
+//seedDataWishlist();
