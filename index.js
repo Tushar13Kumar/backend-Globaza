@@ -11,7 +11,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 const { initializeDatabase } = require("./db/db.connect");
-const fs = require("fs");
+//const fs = require("fs");
 
 // Models
 const Product = require("./models/Product");
@@ -364,11 +364,11 @@ app.get("/address/:addressId" , async(req , res) => {
 // const jsonDataOrders = fs.readFileSync("./data/orders.json", "utf-8");
 // const ordersData = JSON.parse(jsonDataOrders);
 
-const jsonDataCarts = fs.readFileSync("./data/carts.json", "utf-8");
-const cartsData = JSON.parse(jsonDataCarts);
+// const jsonDataCarts = fs.readFileSync("./data/carts.json", "utf-8");
+// const cartsData = JSON.parse(jsonDataCarts);
 
- const jsonDataWishlist = fs.readFileSync("./data/wishlist.json", "utf-8");
- const wishlistData = JSON.parse(jsonDataWishlist);
+//  const jsonDataWishlist = fs.readFileSync("./data/wishlist.json", "utf-8");
+//  const wishlistData = JSON.parse(jsonDataWishlist);
 
 // 2️⃣ Seeding Functions
 // function seedDataProducts() {
