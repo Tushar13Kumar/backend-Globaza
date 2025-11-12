@@ -12,10 +12,10 @@ async function deleteAllData() {
 
     console.log("🧹 Deleting all selected collections...");
 
-    await Product.deleteMany({});
-    await Cart.deleteMany({});
+   // await Product.deleteMany({});
+   // await Cart.deleteMany({});
     await Wishlist.deleteMany({});
-    await Order.deleteMany({});
+   // await Order.deleteMany({});
 
     console.log("✅ Deleted Products, Carts, Wishlist, and Orders successfully!");
 

@@ -65,6 +65,26 @@ async function readAllProducts(){
     }
 }
 
+async function createProducts(newProducts) {
+    try{
+        const product = new Product(newProducts)
+        const saveProduct = await product.save()
+        return saveProduct
+    } catch(error){
+        throw error
+    }
+    
+}
+app.post("/products", async (req, res) => {
+  try {
+    const savedProducts = await Product.insertMany(req.body);
+    res.status(201).json({ message: "Products added successfully", products: savedProducts });
+  } catch (error) {
+    console.error("❌ Error adding products:", error);
+    res.status(500).json({ error: "Failed to add products" });
+  }
+});
+
 app.get("/products", async (req, res) => {
   try {
     const products = await readAllProducts();
@@ -91,6 +111,18 @@ async function readAllProductsCategories(){
 
     }
 }
+app.post("/categories", async (req, res) => {
+  try {
+    const categories = req.body; // expect an array of categories
+    const result = await Category.insertMany(categories);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error("Error adding category:", error);
+    res.status(500).json({ error: "Failed to add category" });
+  }
+});
+
+
 
 app.get("/categories" , async (req , res) => {
     try{
@@ -117,6 +149,32 @@ async function readProductCategoriesById(productCategoriesId) {
     }
     
 }
+async function readProductCategoriesByName(productCategoriesName) {
+    try{
+        const productCategories = await Category.findOne({name: productCategoriesName}  )
+        return(productCategories)
+
+    } catch(error){
+        throw error
+
+    }
+    
+}
+app.get("/categories/:categoryName" , async(req , res) => {
+    try{
+        const categories = await readProductCategoriesByName(req.params.categoryName)
+        if( categories){
+            res.json( categories)
+        }else{
+            res.status(404).json({error: "product is not found"})
+        }
+
+    } catch(error){
+        res.status(500).json({error: "failed to fetch product"})
+    }
+})
+
+
 
 app.get("/categories/:categoryId" , async(req , res) => {
     try{
@@ -488,7 +546,7 @@ function seedDataWishlist() {
 
 // // 3️⃣ Run All Seeds
 //seedDataProducts();
-// seedDataCategories();
+//seedDataCategories();
 // seedDataUsers();
 //seedDataOrders();
 //seedDataCarts();

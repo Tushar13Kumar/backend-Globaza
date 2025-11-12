@@ -1,42 +1,27 @@
 [
   {
     "id": "c1",
-    "name": "Bags",
-    "image": "https://images.unsplash.com/photo-1600181955681-5d1d0f3f96ce?w=600"
+    "name": "Men",
+    "image": "https://picsum.photos/id/26/200/300"
   },
   {
     "id": "c2",
-    "name": "Electronics",
-    "image": "https://images.unsplash.com/photo-1580894908361-967195033215?w=600"
+    "name": "Women",
+    "image": "https://picsum.photos/id/26/200/300"
   },
   {
     "id": "c3",
-    "name": "Watches & Accessories",
-    "image": "https://images.unsplash.com/photo-1518544801958-efcbf8a7ec10?w=600"
+    "name": "Kids",
+    "image": "https://picsum.photos/id/26/200/300"
   },
   {
     "id": "c4",
-    "name": "Home & Kitchen",
-    "image": "https://images.unsplash.com/photo-1510626176961-4b37d6b90c4b?w=600"
+    "name": "Electronics",
+    "image": "https://picsum.photos/id/26/200/300"
   },
   {
     "id": "c5",
-    "name": "Footwear",
-    "image": "https://images.unsplash.com/photo-1606813908983-b9fc97ff7b3e?w=600"
-  },
-  {
-    "id": "c6",
-    "name": "Lighting",
-    "image": "https://images.unsplash.com/photo-1578898887932-c28a0b3b467b?w=600"
-  },
-  {
-    "id": "c7",
-    "name": "Home Decor",
-    "image": "https://images.unsplash.com/photo-1615874959474-d609969a7f3a?w=600"
-  },
-  {
-    "id": "c8",
-    "name": "Outdoor Essentials",
-    "image": "https://images.unsplash.com/photo-1595433562696-19c85d1bba3a?w=600"
+    "name": "Home",
+    "image": "https://picsum.photos/id/26/200/300"
   }
 ]
