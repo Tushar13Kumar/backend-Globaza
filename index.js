@@ -130,6 +130,19 @@ async function readAllProductsCategories(){
 
     }
 }
+
+//async function for orders
+async function readAllProductsOrders(){
+    try{
+        const allOrders = await Order.find()
+        return(allOrders)
+
+    } catch(error){
+        throw error
+
+    }
+}
+
 app.post("/categories", async (req, res) => {
   try {
     const categories = req.body; // expect an array of categories
@@ -168,6 +181,23 @@ app.get("/categories" , async (req , res) => {
         res.status(500).json({error: "failed to fetch products categories"})
     }
 })
+
+//orders 
+
+app.get("/orders" , async (req , res) => {
+    try{
+        const allOrdered = await readAllProductsOrders()
+        if(allOrdered.length != 0 ){
+            res.json(allOrdered)
+        } else {
+            res.status(404).json({error: "not found products order"})
+        }
+
+    } catch(error){
+        res.status(500).json({error: "failed to fetch products order"})
+    }
+})
+
 
 async function readProductCategoriesById(productCategoriesId) {
     try{
