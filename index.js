@@ -17,9 +17,10 @@ const { initializeDatabase } = require("./db/db.connect");
 const Product = require("./models/Product");
 const Category = require("./models/Category");
 const User = require("./models/User");
-//const Order = require("./models/Order");
+const Order = require("./models/Order");
 const Cart = require("./models/Cart");
 const Wishlist = require("./models/Wishlist");
+
 app.use(cors());
 app.use(express.json())
 
@@ -99,6 +100,24 @@ app.get("/products", async (req, res) => {
   }
 });
 
+// GET single product by ID
+app.get("/products/:productId", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.productId).populate("category");
+
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    res.json(product);
+
+  } catch (error) {
+    console.error("❌ Error fetching product:", error);
+    res.status(500).json({ error: "Failed to fetch product" });
+  }
+});
+
+
 
 // //categories api 
 async function readAllProductsCategories(){
@@ -119,6 +138,18 @@ app.post("/categories", async (req, res) => {
   } catch (error) {
     console.error("Error adding category:", error);
     res.status(500).json({ error: "Failed to add category" });
+  }
+});
+
+//order post the data 
+app.post("/orders", async (req, res) => {
+  try {
+    const orders = req.body; // expect an array of orders
+    const result = await Order.insertMany(orders);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error("Error adding order:", error);
+    res.status(500).json({ error: "Failed to add order" });
   }
 });
 
