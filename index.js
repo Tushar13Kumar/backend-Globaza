@@ -227,15 +227,24 @@ async function readAllProductsOrders(){
 //order post the data 
 app.post("/orders", async (req, res) => {
   try {
-    const orders = req.body; // expect an array of orders
-    const result = await Order.insertMany(orders);
-    res.status(201).json(result);
+    const savedOrders = await Order.insertMany(req.body)
+    // const orders = req.body; // expect an array of orders
+   // const result = await Order.insertMany(orders);
+    res.status(201).json({message: "orders added successfully" , orders: savedOrders});
   } catch (error) {
     console.error("Error adding order:", error);
     res.status(500).json({ error: "Failed to add order" });
   }
 });
-
+app.post("/products", async (req, res) => {
+  try {
+    const savedProducts = await Product.insertMany(req.body);
+    res.status(201).json({ message: "Products added successfully", products: savedProducts });
+  } catch (error) {
+    console.error("❌ Error adding products:", error);
+    res.status(500).json({ error: "Failed to add products" });
+  }
+});
 
 
 
