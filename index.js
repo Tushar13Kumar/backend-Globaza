@@ -19,7 +19,7 @@ const { initializeDatabase } = require("./db/db.connect");
 const Product = require("./models/Product");
 const Category = require("./models/Category");
 const User = require("./models/User");
-const Order = require("./models/order");
+const Order = require("./models/Order");
 const Cart = require("./models/Cart");
 const Wishlist = require("./models/Wishlist");
 
@@ -246,7 +246,7 @@ app.post("/products", async (req, res) => {
   }
 });
 
-
+n
 
 
 //orders 
