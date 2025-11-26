@@ -1,0 +1,20 @@
+[
+  {
+    "user": "69088dc01b2746346fc75ffd",
+    "items": [
+      {
+        "product": "69148631e6110adf5d4fe068",
+        "quantity": 2
+      },
+      {
+        "product": "69148632e6110adf5d4fe069",
+        "quantity": 1
+      }
+    ],
+    "totalAmount": 1499,
+    "address": "123 MG Road, Delhi, India",
+    "status": "Placed",
+    "createdAt": "2025-01-01T10:00:00Z"
+  }
+  
+]

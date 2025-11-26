@@ -1,14 +1,16 @@
 const express = require("express")
-//const cors = require("cors");
-const app = express()
 const cors = require("cors");
-const corsOptions = {
-  origin: "*",
-  credentials: true,
-  optionSuccessStatus: 200,
-};
-
-app.use(cors(corsOptions));
+const app = express()
+//const cors = require("cors");
+// ✅ Proper CORS setup
+app.use(
+  cors({
+   origin: "*",
+ 
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 const { initializeDatabase } = require("./db/db.connect");
 //const fs = require("fs");
@@ -17,7 +19,7 @@ const { initializeDatabase } = require("./db/db.connect");
 const Product = require("./models/Product");
 const Category = require("./models/Category");
 const User = require("./models/User");
-const Order = require("./models/Order");
+const Order = require("./models/order");
 const Cart = require("./models/Cart");
 const Wishlist = require("./models/Wishlist");
 
@@ -131,18 +133,6 @@ async function readAllProductsCategories(){
     }
 }
 
-//async function for orders
-async function readAllProductsOrders(){
-    try{
-        const allOrders = await Order.find()
-        return(allOrders)
-
-    } catch(error){
-        throw error
-
-    }
-}
-
 app.post("/categories", async (req, res) => {
   try {
     const categories = req.body; // expect an array of categories
@@ -153,20 +143,6 @@ app.post("/categories", async (req, res) => {
     res.status(500).json({ error: "Failed to add category" });
   }
 });
-
-//order post the data 
-app.post("/orders", async (req, res) => {
-  try {
-    const orders = req.body; // expect an array of orders
-    const result = await Order.insertMany(orders);
-    res.status(201).json(result);
-  } catch (error) {
-    console.error("Error adding order:", error);
-    res.status(500).json({ error: "Failed to add order" });
-  }
-});
-
-
 
 app.get("/categories" , async (req , res) => {
     try{
@@ -181,23 +157,6 @@ app.get("/categories" , async (req , res) => {
         res.status(500).json({error: "failed to fetch products categories"})
     }
 })
-
-//orders 
-
-app.get("/orders" , async (req , res) => {
-    try{
-        const allOrdered = await readAllProductsOrders()
-        if(allOrdered.length != 0 ){
-            res.json(allOrdered)
-        } else {
-            res.status(404).json({error: "not found products order"})
-        }
-
-    } catch(error){
-        res.status(500).json({error: "failed to fetch products order"})
-    }
-})
-
 
 async function readProductCategoriesById(productCategoriesId) {
     try{
@@ -250,6 +209,55 @@ app.get("/categories/:categoryId" , async(req , res) => {
         res.status(500).json({error: "failed to fetch product"})
     }
 })
+
+//async function for orders
+async function readAllProductsOrders(){
+    try{
+        const allOrders = await Order.find()
+        return(allOrders)
+
+    } catch(error){
+        throw error
+
+    }
+}
+
+
+
+//order post the data 
+app.post("/orders", async (req, res) => {
+  try {
+    const orders = req.body; // expect an array of orders
+    const result = await Order.insertMany(orders);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error("Error adding order:", error);
+    res.status(500).json({ error: "Failed to add order" });
+  }
+});
+
+
+
+
+
+//orders 
+
+app.get("/orders" , async (req , res) => {
+    try{
+        const allOrdered = await readAllProductsOrders()
+        if(allOrdered.length != 0 ){
+            res.json(allOrdered)
+        } else {
+            res.status(404).json({error: "not found products order"})
+        }
+
+    } catch(error){
+        res.status(500).json({error: "failed to fetch products order"})
+    }
+})
+
+
+
 
 // //wishlist api
 async function readAllWishlist(){
@@ -481,7 +489,7 @@ app.get("/address/:addressId" , async(req , res) => {
 // const usersData = JSON.parse(jsonDataUsers);
 
 // const jsonDataOrders = fs.readFileSync("./data/orders.json", "utf-8");
-// const ordersData = JSON.parse(jsonDataOrders);
+//  const ordersData = JSON.parse(jsonDataOrders);
 
 // const jsonDataCarts = fs.readFileSync("./data/carts.json", "utf-8");
 // const cartsData = JSON.parse(jsonDataCarts);
@@ -559,12 +567,12 @@ app.get("/address/:addressId" , async(req , res) => {
 //   try {
 //     for (const orderData of ordersData) {
 //       const newOrder = new Order({
-//          user: orderData.user,
+//         user: orderData.user,
 //         items: orderData.items,
 //         totalAmount: orderData.totalAmount,
 //         address: orderData.address,
 //         status: orderData.status,
-//         createdAt: orderData.createdAt,
+//         createdAt: orderData.createdAt
 //       });
 //       newOrder.save();
 //     }
@@ -574,36 +582,36 @@ app.get("/address/:addressId" , async(req , res) => {
 //   }
 // }
 
-function seedDataCarts() {
-  try {
-    for (const cartData of cartsData) {
-      const newCart = new Cart({
-        //user: cartData.user, // ✅ correct field name
-        items: cartData.items, // ✅ each item contains {product, quantity}
-        //totalPrice: cartData.totalPrice,
-      });
-      newCart.save();
-    }
-    console.log("✅ Carts seeded successfully!");
-  } catch (error) {
-    console.error("❌ Error seeding carts:", error);
-  }
-}
+// function seedDataCarts() {
+//   try {
+//     for (const cartData of cartsData) {
+//       const newCart = new Cart({
+//         //user: cartData.user, // ✅ correct field name
+//         items: cartData.items, // ✅ each item contains {product, quantity}
+//         //totalPrice: cartData.totalPrice,
+//       });
+//       newCart.save();
+//     }
+//     console.log("✅ Carts seeded successfully!");
+//   } catch (error) {
+//     console.error("❌ Error seeding carts:", error);
+//   }
+// }
 
-function seedDataWishlist() {
-  try {
-    for (const wishData of wishlistData) {
-      const newWishlist = new Wishlist({
-        user: wishData.user,
-        products: wishData.products,
-      });
-      newWishlist.save();
-    }
-    console.log("✅ Wishlist seeded successfully!");
-  } catch (error) {
-    console.error("❌ Error seeding wishlist:", error);
-  }
-}
+// function seedDataWishlist() {
+//   try {
+//     for (const wishData of wishlistData) {
+//       const newWishlist = new Wishlist({
+//         user: wishData.user,
+//         products: wishData.products,
+//       });
+//       newWishlist.save();
+//     }
+//     console.log("✅ Wishlist seeded successfully!");
+//   } catch (error) {
+//     console.error("❌ Error seeding wishlist:", error);
+//   }
+// }
 
 // // 3️⃣ Run All Seeds
 //seedDataProducts();
