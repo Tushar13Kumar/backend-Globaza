@@ -119,6 +119,30 @@ app.get("/products/:productId", async (req, res) => {
   }
 });
 
+// delete function 
+async function deleteProductById(productId){
+    try{
+        const deletedProduct = await Product.findByIdAndDelete(productId)
+        return deletedProduct
+
+    } catch(error){
+        console.log(error)
+
+    }
+}
+
+app.delete("/products/:productId" , async(req , res) => {
+    try{
+        const deleteProduct = await deleteProductById(req.params.productId) 
+        if(deleteProduct){
+        res.status(200).json({message: "delete product successfully"})
+
+        }
+
+    } catch(error){
+        res.status(500).json({error: "error in deleting product data "})
+    }
+})
 
 
 // //categories api 
