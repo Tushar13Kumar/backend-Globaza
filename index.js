@@ -1,5 +1,8 @@
 const express = require("express")
 const cors = require("cors");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const authMiddleware = require("./middlewares/auth.middleware");
 const app = express()
 //const cors = require("cors");
 // ✅ Proper CORS setup
@@ -56,6 +59,75 @@ initializeDatabase();
 //         res.status(500).json({error: "failed to fetch product"})
 //     }
 // })
+// ============ AUTH ROUTES ============
+
+// REGISTER
+app.post("/auth/register", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ error: "Email already registered" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ name, email, password: hashedPassword });
+    await newUser.save();
+
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (error) {
+    console.error("Register error:", error);
+    res.status(500).json({ error: "Failed to register user" });
+  }
+});
+
+// LOGIN
+app.post("/auth/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.json({
+      message: "Login successful",
+      token,
+      user: { id: user._id, name: user.name, email: user.email },
+    });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ error: "Failed to login" });
+  }
+});
+
+// GET current logged-in user (protected route example)
+app.get("/auth/me", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select("-password");
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch user" });
+  }
+});
 
 async function readAllProducts(){
     try{
@@ -235,9 +307,9 @@ app.get("/categories/:categoryId" , async(req , res) => {
 })
 
 //async function for orders
-async function readAllProductsOrders(){
+async function readAllProductsOrders(userId){    // 👈 yaha 'userId' parameter add karo
     try{
-        const allOrders = await Order.find()
+        const allOrders = await Order.find({ user: userId })  // 👈 sirf isi user ke orders
         return(allOrders)
 
     } catch(error){
@@ -249,7 +321,7 @@ async function readAllProductsOrders(){
 
 
 //order post the data 
-app.post("/orders", async (req, res) => {
+app.post("/orders", authMiddleware, async (req, res) => {
   try {
     const savedOrders = await Order.insertMany(req.body)
     // const orders = req.body; // expect an array of orders
@@ -275,9 +347,9 @@ app.post("/products", async (req, res) => {
 
 //orders 
 
-app.get("/orders" , async (req , res) => {
+app.get("/orders" , authMiddleware, async (req , res) => {
     try{
-        const allOrdered = await readAllProductsOrders()
+        const allOrdered = await readAllProductsOrders(req.user.userId)  // 👈 userId pass karo
         if(allOrdered.length != 0 ){
             res.json(allOrdered)
         } else {
@@ -302,7 +374,7 @@ async function readAllWishlist(){
     }
 }
 
-app.get("/wishlist" , async (req , res) => {
+app.get("/wishlist" , authMiddleware, async (req , res) => {
     try{
         const wishlist = await readAllWishlist()
         if(wishlist.length != 0 ){
@@ -325,7 +397,7 @@ async function readWishlistById(wishlistId) {
     }
 }
 
-app.get("/wishlist/:wishlistId" , async(req , res) => {
+app.get("/wishlist/:wishlistId" , authMiddleware, async(req , res) => {
     try{
         const wishlist = await readWishlistById(req.params.wishlistId)
         if(wishlist){
@@ -341,18 +413,18 @@ app.get("/wishlist/:wishlistId" , async(req , res) => {
 
 
 //cart api
-async function readAllCarts(){
+async function readAllCarts(userId){
     try{
-        const allCarts = await Cart.find().populate("items")
+        const allCarts = await Cart.find({ user: userId }).populate("items")
         return(allCarts)
     } catch(error){
         throw error
     }
 }
 
-app.get("/carts" , async (req , res) => {
+app.get("/carts" , authMiddleware, async (req , res) => {
     try{
-        const carts = await readAllCarts()
+        const carts = await readAllCarts(req.user.userId)
         if(carts.length != 0 ){
             res.json(carts)
         } else {
@@ -363,6 +435,28 @@ app.get("/carts" , async (req , res) => {
         res.status(500).json({error: "failed to fetch carts"})
     }
 })
+// async function readAllCarts(){
+//     try{
+//         const allCarts = await Cart.find().populate("items")
+//         return(allCarts)
+//     } catch(error){
+//         throw error
+//     }
+// }
+
+// app.get("/carts" , authMiddleware, async (req , res) => {
+//     try{
+//         const carts = await readAllCarts()
+//         if(carts.length != 0 ){
+//             res.json(carts)
+//         } else {
+//             res.status(404).json({error: "not found carts"})
+//         }
+
+//     } catch(error){
+//         res.status(500).json({error: "failed to fetch carts"})
+//     }
+// })
 
 async function readCartById(cartId) {
     try{
@@ -373,7 +467,7 @@ async function readCartById(cartId) {
     }
 }
 
-app.get("/carts/:cartId" , async(req , res) => {
+app.get("/carts/:cartId" , authMiddleware, async(req , res) => {
     try{
         const cart = await readCartById(req.params.cartId)
         if(cart){
@@ -391,18 +485,18 @@ app.get("/carts/:cartId" , async(req , res) => {
 
 
 // //address api
-async function readAllAddresses(){
+async function readAllAddresses(userId){        
     try{
-        const allAddresses = await User.find().select("addresses name")
-        return(allAddresses)
+        const user = await User.findById(userId).select("addresses name")
+        return(user ? [user] : [])
     } catch(error){
         throw error
     }
 }
 
-app.get("/address" , async (req , res) => {
+app.get("/address" , authMiddleware, async (req , res) => {
     try{
-        const addresses = await readAllAddresses()
+        const addresses = await readAllAddresses(req.user.userId)  // 👈 userId pass karo
         if(addresses.length != 0 ){
             res.json(addresses)
         } else {
@@ -423,7 +517,7 @@ async function readAddressById(addressId) {
     }
 }
 
-app.get("/address/:addressId" , async(req , res) => {
+app.get("/address/:addressId" , authMiddleware, async(req , res) => {
     try{
         const address = await readAddressById(req.params.addressId)
         if(address){
